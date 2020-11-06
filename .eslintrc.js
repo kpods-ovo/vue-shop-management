@@ -10,8 +10,13 @@ module.exports = {
   parserOptions: {
     parser: 'babel-eslint'
   },
+  plugins: [
+    'vue'
+  ],
   rules: {
+    "space-before-function-paren": 0,
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    "indent": ["off", 2]
   }
 }

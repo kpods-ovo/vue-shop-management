@@ -2,8 +2,17 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import login from '../components/login.vue'
 import home from '../components/home.vue'
+import users from '../components/user/users.vue'
+import roles from '../components/rights/roles.vue'
 
 Vue.use(VueRouter)
+
+// 获取原型对象上的push函数
+const originalPush = VueRouter.prototype.push
+// 修改原型对象中的push方法
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 const routes = [
   {
@@ -16,7 +25,17 @@ const routes = [
   },
   {
     path: '/home',
-    component: home
+    component: home,
+    children: [
+      {
+        path: '/users',
+        component: users
+      },
+      {
+        path: '/roles',
+        component: roles
+      }
+    ]
   }
 ]
 

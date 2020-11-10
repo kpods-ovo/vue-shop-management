@@ -54,8 +54,10 @@
             </el-button>
             <el-button type="danger" icon="el-icon-delete" size="medium" @click="deleteUsers(scoped.row.id)">
             </el-button>
-            <el-button type="warning" icon="el-icon-setting" size="medium"></el-button>
+            <el-button type="warning" icon="el-icon-setting" size="medium"
+              @click="distribute = true;distributeRoles(scoped.row)"></el-button>
           </template>
+          <!-- 编辑角色的对话框 -->
           <el-dialog title="提示" :visible.sync="changeUsers" width="45%" append-to-body @close="resetFrom">
             <el-form :model="changeForm" :rules="rules" ref="changeForm" label-width="100px" class="demo-ruleForm">
               <el-form-item label="用户名" prop="usernameEdit">
@@ -73,6 +75,24 @@
               <el-button type="primary" @click="changeUsers = false;editForm()">确 定</el-button>
             </span>
           </el-dialog>
+          <!-- 分配角色的对话框 -->
+          <el-dialog title="分配角色" :visible.sync="distribute" width="30%" append-to-body>
+            <p> 当前的用户 : {{currentUsername}}</p>
+            <p> 当前的角色 : {{currentRolesname}}</p>
+            <el-form ref="form" :model="form" label-width="90px">
+              <el-form-item label="分配新角色 :">
+                <el-select v-model="form.value" placeholder="请选择要分配的角色" @change="optionChange">
+                  <el-option ref="changeOption" v-for="item in rolesLists" :key="item.id" :label="item.roleName"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="distribute = false">取 消</el-button>
+              <el-button type="primary" @click="distribute = false;distributeNewRoles()">确 定</el-button>
+            </span>
+          </el-dialog>
         </el-table-column>
       </el-table>
       <!-- 分页控件 -->
@@ -88,6 +108,9 @@
 export default {
   data() {
     return {
+      form: {
+        value: ''
+      },
       tableData: [],
       pageNumber: 1,
       pageSize: 5,
@@ -98,6 +121,12 @@ export default {
       changeUsers: false,
       changeUsersName: '',
       editFormId: '',
+      distribute: false,
+      currentUsername: '',
+      currentRolesname: '',
+      currentId: '',
+      currentRid: '',
+      rolesLists: [],
       ruleForm: {
         username: '',
         password: '',
@@ -128,6 +157,7 @@ export default {
   },
   created() {
     this.getUsersData()
+    this.getRolesLists()
   },
   methods: {
     handleSizeChange(val) {
@@ -232,6 +262,44 @@ export default {
     // 关闭对话框重置表单
     resetFrom() {
       this.$refs.changeForm.resetFields()
+    },
+    // 分配角色按钮获取当前角色
+    distributeRoles(data) {
+      this.currentUsername = data.username
+      this.currentRolesname = data.role_name
+      this.currentId = data.id
+    },
+    // 获取角色列表
+    getRolesLists() {
+      this.$http.get('roles').then(response => {
+        this.rolesLists = response.data.data
+      })
+    },
+    // 分配角色下拉框选中值改变时
+    optionChange(currentData) {
+      this.$nextTick(() => {
+        this.currentRid = currentData
+      })
+    },
+    // 分配用户角色
+    distributeNewRoles() {
+      this.$http.put(
+        `users/${this.currentId}/role`,
+        { rid: this.currentRid }
+      ).then(response => {
+        if (response.data.meta.status === 200) {
+          this.$message({
+            type: 'success',
+            message: '设置角色成功'
+          })
+          this.getUsersData()
+        } else {
+          this.$message({
+            type: 'error',
+            message: '设置角色失败'
+          })
+        }
+      })
     }
   }
 }

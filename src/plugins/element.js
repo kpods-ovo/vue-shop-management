@@ -22,7 +22,12 @@ import {
   Pagination,
   Switch,
   Dialog,
-  MessageBox
+  MessageBox,
+  Tag,
+  Tree,
+  Tooltip,
+  Select,
+  Option
 } from 'element-ui'
 
 Vue.use(Button)
@@ -46,6 +51,11 @@ Vue.use(TableColumn)
 Vue.use(Pagination)
 Vue.use(Switch)
 Vue.use(Dialog)
+Vue.use(Tag)
+Vue.use(Tree)
+Vue.use(Tooltip)
+Vue.use(Select)
+Vue.use(Option)
 // 这种引入方式可以解决刷新弹框问题
 Vue.component(MessageBox.name, MessageBox)
 // 挂载element ui的message组件到原型链上

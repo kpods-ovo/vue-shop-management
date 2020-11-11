@@ -13,6 +13,8 @@
 2.在写用户列表中的编辑按钮的功能时，遇到的了使用this.$refs.changeForm.validate表单验证无论怎样都是返回false的情况，经过一番排查发现原因在于在这个需要验证的form表单中，有一个input我是按照需求给了disabled禁用了，虽然v-model传了个定值，但是在写rules验证规则时依然把它计算在内，导致既无法更改，表单验证又把它当成验证失败的情况，最后便把那个被禁用的form-item的prop属性从rules验证规则中移除，便解决了问题。
 
 3.在写角色列表的分配权限功能时使用到了Vue.nextTick来解决第一次点击按钮时tree还未渲染而导致的报错。
+
+4.关于element ui使用级联选择器时找不到this.$refs.cascader下的clearCheckedNodes方法的问题，其实这个方法是在this.$refs.cascader.$refs.panel下面。
 ```
 
 ### Compiles and hot-reloads for development

@@ -27,7 +27,8 @@ import {
   Tree,
   Tooltip,
   Select,
-  Option
+  Option,
+  Cascader
 } from 'element-ui'
 
 Vue.use(Button)
@@ -56,6 +57,7 @@ Vue.use(Tree)
 Vue.use(Tooltip)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Cascader)
 // 这种引入方式可以解决刷新弹框问题
 Vue.component(MessageBox.name, MessageBox)
 // 挂载element ui的message组件到原型链上

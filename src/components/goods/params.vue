@@ -54,14 +54,24 @@
           <!-- 添加参数按钮 -->
           <el-button type="primary" size="small" @click="addDialogVisible = true">添加参数</el-button>
           <!-- 静态参数表格数据 -->
-          <el-table :data="onlyTableData" style="width: 100%" border>
+          <el-table :data="onlyTableData" style="width: 100%" border @expand-change="expandSelect" :row-key='getRowKeys'
+            :expand-row-keys="expands">
             <el-table-column type="expand">
               <template v-slot="props">
-                <el-form label-position="left" inline class="demo-table-expand">
+                <!-- <el-form label-position="left" inline class="demo-table-expand">
                   <span v-for="(item,index) in props.row.valArry" :key="index">
                     <el-tag :key="item" closable :type="''">{{item}}</el-tag>
                   </span>
-                </el-form>
+                </el-form> -->
+                <el-tag :key="tag" v-for="tag in props.row.valArry" closable :disable-transitions="false"
+                  @close="handleClose(tag,props.row.valArry,props.row.attr_id,'only',props.row.attr_name)">
+                  {{tag}}
+                </el-tag>
+                <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small"
+                  @blur="handleInputConfirm(props.row.valArry,props.row.attr_id,'only',props.row.attr_name)">
+                </el-input>
+                <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag
+                </el-button>
               </template>
             </el-table-column>
             <el-table-column label="#" prop="idx" width="60">
@@ -378,9 +388,8 @@ export default {
               this.onlyTableData = response.data.data
               this.onlyTableData.forEach((item, index) => {
                 item.idx = index + 1
-                item.valArry = item.attr_vals.split(',')
+                item.valArry = item.attr_vals.length === 0 ? [] : item.attr_vals.split(',')
               })
-              console.log(this.onlyTableData)
             }
           } else {
             this.$message({

@@ -31,7 +31,11 @@ import {
   Cascader,
   Alert,
   Tabs,
-  TabPane
+  TabPane,
+  Step,
+  Steps,
+  Checkbox,
+  Upload
 } from 'element-ui'
 
 Vue.use(Button)
@@ -64,6 +68,10 @@ Vue.use(Cascader)
 Vue.use(Alert)
 Vue.use(Tabs)
 Vue.use(TabPane)
+Vue.use(Step)
+Vue.use(Steps)
+Vue.use(Checkbox)
+Vue.use(Upload)
 // 这种引入方式可以解决刷新弹框问题
 Vue.component(MessageBox.name, MessageBox)
 // 挂载element ui的message组件到原型链上

@@ -15,6 +15,8 @@
 3.在写角色列表的分配权限功能时使用到了Vue.nextTick来解决第一次点击按钮时tree还未渲染而导致的报错。
 
 4.关于element ui使用级联选择器时找不到this.$refs.cascader下的clearCheckedNodes方法的问题，其实这个方法是在this.$refs.cascader.$refs.panel下面。
+
+5.关于使用resetFields重置表单无效的情况，需要添加上prop属性且需要和绑定的数据同名，至于原因是在看到源码中有if (this.prop)的一个判断语句，所以prop肯定是需要的。
 ```
 
 ### Compiles and hot-reloads for development

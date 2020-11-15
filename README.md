@@ -1,7 +1,6 @@
 # vue-shop-management
 
 ## 项目中遇到的问题
-```
 + 1.在home组件下进行子组件间的路由跳转时，遇到了Uncaught (in promise) NavigationDuplicated: Avoided redundant navigation to current location: "/roles".这样的 
   问题，问题原因是当我点击了某个子组件跳转到了对应的子路由时，再次点击则会报上述错误。   一开始我的解决方案是在使用编程式导航进行跳转时加一个if判断语句，如下：
   ```
@@ -20,5 +19,4 @@
 
 + 4.关于element ui使用级联选择器时找不到this.$refs.cascader下的clearCheckedNodes方法的问题，其实这个方法是在this.$refs.cascader.$refs.panel下面。   
 
-+ 5.关于使用resetFields重置表单无效的情况，需要添加上prop属性且需要和绑定的数据同名，至于原因是在看到源码中有if (this.prop)的一个判断语句，所以prop肯定是需要的。   
-```
++ 5.关于使用resetFields重置表单无效的情况，需要添加上prop属性且需要和绑定的数据同名，至于原因是在看到源码中有if (this.prop)的一个判断语句，所以prop肯定是需要的。

@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router.js'
+// 按需引入element ui组件
 import './plugins/element.js'
+// 按需引入echarts组件
+import './plugins/echarts.js'
 // 引入全局样式表
 import './assets/css/global.css'
 // 全局引入axios并挂载到Vue原型链上

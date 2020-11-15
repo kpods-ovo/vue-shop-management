@@ -35,7 +35,9 @@ import {
   Step,
   Steps,
   Checkbox,
-  Upload
+  Upload,
+  Timeline,
+  TimelineItem
 } from 'element-ui'
 
 Vue.use(Button)
@@ -72,6 +74,8 @@ Vue.use(Step)
 Vue.use(Steps)
 Vue.use(Checkbox)
 Vue.use(Upload)
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 // 这种引入方式可以解决刷新弹框问题
 Vue.component(MessageBox.name, MessageBox)
 // 挂载element ui的message组件到原型链上

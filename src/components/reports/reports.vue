@@ -54,7 +54,6 @@ export default {
     var myChart = this.$echarts.init(document.getElementById('myChart'))
     this.$http.get('reports/type/1').then(response => {
       myChart.setOption(_.merge(response.data.data, this.options))
-      console.log(_.merge(response.data.data, this.options))
     })
   }
 }

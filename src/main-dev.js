@@ -15,13 +15,22 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
+// 引入nprogress
+import nprogress from 'nprogress'
+
 Vue.prototype.$http = axios
 Vue.use(VueQuillEditor)
 // 配置数据接口的根路径
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
 // axios拦截器加入token,如若不加入token值，则后台无法返回相应数据
 axios.interceptors.request.use(config => {
+  nprogress.start()
   config.headers.Authorization = window.sessionStorage.getItem('token')
+  return config
+})
+
+axios.interceptors.response.use(config => {
+  nprogress.done()
   return config
 })
 
